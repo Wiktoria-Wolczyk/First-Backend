@@ -1,82 +1,104 @@
+// const express = require("express");
+// const app = express();
 const express = require("express");
 const app = express();
+const birds = require("./birds");
 
-app.use(express.json());
+//...
+app.use("/birds", birds);
 
-const users = [
-  { id: "0", userName: "A" },
-  { id: "1", userName: "B" },
-  { id: "2", userName: "C" },
-  { id: "3", userName: "D" },
-  { id: "4", userName: "E" },
-  { id: "5", userName: "F" },
-];
-
-app.get("/users", (request, response) => {
-  response.json(users);
+app.listen(3000, () => {
+  console.log("dziala");
 });
 
-app.get("/users/:id", (request, response) => {
-  response.json(users[request.params["id"]]);
-});
+// app.use(express.json());
 
-app.post("/users", (request, response) => {
-  const newUser = {
-    id: request.body.id,
-    userName: request.body.userName,
-  };
+// const users = [
+//   { id: "0", userName: "A" },
+//   { id: "1", userName: "B" },
+//   { id: "2", userName: "C" },
+//   { id: "3", userName: "D" },
+//   { id: "4", userName: "E" },
+//   { id: "5", userName: "F" },
+// ];
 
-  users.push(newUser);
+// app.use((request, response, next) => {
+//   const id = request.body.id;
 
-  response.status(201).json({
-    status: "success",
-    message: newUser,
-  });
-});
+//   if (id) {
+//     delete request.body.id;
+//   }
 
-app.put("/users/:id", (request, response) => {
-  const userId = request.params.id;
-  const updatedUser = {
-    ...request.body,
-    id: userId,
-  };
+//   next();
+// });
 
-  const userIndex = users.findIndex((user) => user.id === userId);
+// app.get("/users", (request, response) => {
+//   response.json(users);
+// });
 
-  if (userIndex !== -1) {
-    users[userIndex] = updatedUser;
+// app.get("/users/:id", (request, response) => {
+//   response.json(users[request.params["id"]]);
+// });
 
-    response.status(200).json({
-      status: "Success",
-      message: updatedUser,
-    });
-  } else {
-    response.status(400).json({
-      status: "Failed",
-      message: "User not found",
-    });
-  }
-});
+// app.post("/users", (request, response) => {
+//   const newUser = {
+//     id: request.body.id,
+//     userName: request.body.userName,
+//   };
 
-app.delete("/users/:id", (request, response) => {
-  const userId = request.params["id"];
+//   users.push(newUser);
 
-  const userIndex = users.findIndex((user) => user.id === userId);
+//   response.status(201).json({
+//     status: "success",
+//     message: newUser,
+//   });
+// });
 
-  if (userIndex !== -1) {
-    const deletedUser = users.splice(userIndex, 1)[0];
+// app.put("/users/:id", (request, response) => {
+//   console.log("request.body", request.body);
 
-    response.status(204).json({
-      status: "Success",
-      message: deletedUser,
-    });
-  } else {
-    response.status(400).json({
-      status: "Failed",
-      message: "User not found",
-    });
-  }
-});
+//   const userId = request.params.id;
+//   const updatedUser = {
+//     ...request.body,
+//     id: userId,
+//   };
+
+//   const userIndex = users.findIndex((user) => user.id === userId);
+
+//   if (userIndex !== -1) {
+//     users[userIndex] = updatedUser;
+
+//     response.status(200).json({
+//       status: "Success",
+//       message: updatedUser,
+//     });
+//   } else {
+//     response.status(400).json({
+//       status: "Failed",
+//       message: "User not found",
+//     });
+//   }
+// });
+
+// app.delete("/users/:id", (request, response) => {
+//   const userId = request.params["id"];
+
+//   const userIndex = users.findIndex((user) => user.id === userId);
+
+//   if (userIndex !== -1) {
+//     const deletedUser = users.splice(userIndex, 1)[0];
+
+//     response.status(204).json({
+//       status: "Success",
+//       message: deletedUser,
+//     });
+//   } else {
+//     response.status(400).json({
+//       status: "Failed",
+//       message: "User not found",
+//     });
+//   }
+// });
 
 // paramsy i query paramsy:
 
@@ -123,9 +145,9 @@ app.delete("/users/:id", (request, response) => {
 //   response.status(204).json();
 // });
 
-app.listen(3000, () => {
-  console.log("dziala", 3000);
-});
+// app.listen(3000, () => {
+//   console.log("dziala", 3000);
+// });
 
 // /tabela -
 
