@@ -12,6 +12,7 @@ const users = [
 
 const timeLog = (req, res, next) => {
   console.log("Time: ", Date.now());
+
   next();
 };
 router.use(timeLog);
@@ -35,11 +36,18 @@ router.get("/:id", (request, response) => {
 });
 
 router.post("/", (request, response) => {
+  users.sort(function (a, b) {
+    return Number(a.id) - Number(b.id);
+  });
+
+  const nextID = +users[users.length - 1].id + 1;
+
   const newUser = {
-    id: request.body.id,
+    id: nextID.toString(),
     userName: request.body.userName,
   };
 
+  console.log("newUser", newUser);
   users.push(newUser);
 
   response.status(201).json({
@@ -77,7 +85,7 @@ router.put("/:id", (request, response) => {
 router.delete("/:id", (request, response) => {
   const userId = request.params["id"];
 
-  const userIndex = users.findIndex((user) => user.id === userId);
+  const userIndex = users.findIndex((user) => user.id.toString() === userId);
 
   if (userIndex !== -1) {
     const deletedUser = users.splice(userIndex, 1)[0];
